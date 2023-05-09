@@ -5,7 +5,7 @@ const initQuirk = [
   },
   {
     "type": "suffix",
-    "suffix": "] "
+    "suffix": "]"
   },
   {
     "type": "simple",
