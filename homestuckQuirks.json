@@ -264,8 +264,8 @@
         "replace": "$1$1"
       },
       {
-        "type": "simple",
-        "find": "ing",
+        "type": "regex",
+        "regex": "ing\\b",
         "replace": "in"
       }
     ]
