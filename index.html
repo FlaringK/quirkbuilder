@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quirk Builder</title>
+
+  <meta content="Quirk Builder" property="og:title" />
+  <meta content="This is a tool to help generate homestuck quirks." property="og:description" />
+  <meta content="https://flaringk.github.io/quirkbuilder/assets/alttrollian.ico" property="og:url" />
+  <meta content="https://flaringk.github.io/quirkbuilder/" property="og:image" />
+  <meta content="#d20000" data-react-helmet="true" name="theme-color" />
+
+  <link rel="shortcut icon" href="./assets/alttrollian.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <h1> <img src="./assets/alttrollian.ico" alt=""> <span>Quirk Builder</span></h1>
+  
+  <div id="main">
+
+    <div id="intro" class="text">Welcome to qurik builder! This is a tool to help generate homestuck quirks. Have fun!</div>
+
+    <div id="workspaceWrap" class="window">
+      <div id="workspace">
+        <div id="modifiers">
+          <div id="mods"></div>
+        </div>
+        <div id="editspace">
+
+          <h3>Name & Colour</h3>
+
+          <input type="text" name="textHandle" id="textHandle" onkeyup="processTest()" placeholder="ChumHandle"> <br>
+          <input type="color" name="textColor" id="textColor" onchange="updateColor()"> 
+
+          <hr>
+
+          <div id="adders">
+            <button data-type="prefix">Add Prefix</button>
+            <button data-type="suffix">Add Suffix</button>
+            <button data-type="simple">Add Simple Replace</button>
+            <button data-type="regex">Add Regex Replace</button>
+            <button data-type="random">Add Random Replace</button>
+          </div>        
+
+          <hr>
+
+          <h3>
+            Save quirk
+            <button class="helpButton">?</button>
+            <dialog class="helpDialogue">
+              <div>
+                <p>This will save the current quirk to the local storage, you can load it from the preset buttons above. Saving a quirk with the same name as another quirk will override it. If that quirk has no modifiers, the quirk will be deleted.</p>
+              </div>
+            </dialog>
+          </h3>
+          <input type="text" name="saveQuirkName" id="saveQuirkName" placeholder="Quirk Name"> <br>
+          <button class="saveQuirk" onclick="saveQuirk()">Save quirk</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loadedquirksWrap">
+      <h3 style="margin: 0;">Saved Quirks</h3>
+      <hr>
+      <div id="loadedquirks" class="quirkButtons">
+      </div>
+    </div>
+
+    <div id="presetsWrap">
+      <h3 style="margin-bottom: 0;">Homestuck presets</h3>
+      <hr>
+      <div id="presets" class="quirkButtons">
+      </div>
+    </div>
+
+    <h2>Testing Area</h2>
+    <div id="testspace" class="window">
+      <div>
+        <textarea name="testinput" id="testinput" onkeyup="processTest()" placeholder="Type here"></textarea>
+        <div id="testoutput"></div>
+      </div>
+    </div>
+
+    <details>
+      <summary>Exporting and Importing</summary>
+      <div id="exportspace">
+        <h3>Exported Saved Quirks</h3>
+        <input type="text" name="export" id="export">
+        <h3>Import Saved Quirk</h3>
+        <input type="text" name="import" id="import" placeholder="JSON String here">
+        <button onclick="importQuirks()">Import Quirk</button>
+      </div>
+    </details>
+
+    <div id="footer">
+      Made by <a href="https://flaringk.github.io/">FlaringK</a>
+    </div>
+
+  </div>
+
+  <!-- dialogues -->
+  <dialog class="modal">
+    <div>
+      <h2>Simple Replace</h2>
+      <hr>
+      <div class="option1 opt">
+        <label for="op1">Find Text: </label>
+        <button class="helpButton">?</button>
+        <dialog class="helpDialogue">This is a test</dialog>
+        <input type="text" name="op1" id="op1">
+      </div>
+      <div class="option2 opt">
+        <label for="op2">Replace Text: </label>
+        <button class="helpButton">?</button>
+        <dialog class="helpDialogue">This is a test</dialog>
+        <input type="text" name="op2" id="op2">
+      </div>
+      <div class="optCon opt">
+        <label for="opC">Condition Regex: </label>
+        <button class="helpButton">?</button>
+        <dialog class="helpDialogue">
+          <div>
+            <p>This is the condition for this quirk mod. If this condition is met, aka the regex is found within the text, the quirk mod will be applied, otherwise it will not be. For example, if the condition regex is set to /<span class="arg condition">!</span>/g, the qurik will only be applied when a "!" is found within the text.</p>
+            <p>This feature is not present in the pesterchum client. Though it's effects can be emulated using regex replaces if you know what you're doing.</p>
+          </div>
+        </dialog>
+        <input type="text" name="opC" id="opC">
+      </div>
+      <div class="finalButtons">
+        <button class="cancel">Cancel</button><button class="save">Save</button>
+      </div>
+    </div>
+  </dialog>
+  
+  <script src="./quirkBuilder.js"></script>
+
+</body>
+</html>

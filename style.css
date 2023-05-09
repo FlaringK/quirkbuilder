@@ -1,0 +1,328 @@
+body {
+  margin: 0;
+  background-color: #444;
+  color: white;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+
+  --quirkCol: #008141;
+}
+
+#main {
+  max-width: 940px;
+  margin: auto;
+}
+
+.text {
+  padding: 0.5em 1em;
+}
+
+@font-face {
+  font-family: batmanForever;
+  src: url(./assets/batmfa__.ttf);
+}
+
+/* NEW STYLE */
+
+h1 {
+  margin: .5em 0;
+  font-size: 60px;
+  padding: 0.25em;
+  font-style: italic;
+  font-family: batmanForever;
+  font-weight: 400;
+
+  text-shadow: #766869 .05em 0 0;
+}
+
+h1 img {
+  height: 1.5em;
+  margin-bottom: -.4em;
+
+  animation: bob 2.5s ease-in-out infinite both;
+}
+
+@keyframes bob {
+  from, to { transform: translateY(0.2em); }
+  50% { transform: translateY(-0.1em); } 
+}
+
+.window {
+  margin: 1em 0;
+}
+
+.window, dialog {
+  background: linear-gradient(165deg, rgba(233,0,19,1) 20%, rgba(190,19,4,1) 45%);
+  background-image: url('./assets/Trollbanner.png'), linear-gradient(165deg, rgba(233,0,19,1) 20%, rgba(190,19,4,1) 45%);
+  background-repeat: no-repeat;
+  background-position: 100% 0%;
+
+  border-radius: 15px 15px 10px 10px;
+  padding: 30px 4px 6px 4px;
+
+  border: solid 2px #525252;
+  border-top: hidden;
+  border-bottom: solid 4px #525252;
+
+  position: relative;
+}
+
+.window::before, dialog::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  background: white;
+  left: 10px;
+  right: 10px;
+  height: 8px;
+  border-radius: 8px;
+  opacity: 0.2;
+}
+
+.window::after, dialog::after {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+#workspaceWrap::after { content: "Quirk Builder"; }
+#testspace::after { content: "Quirk Tester"; }
+.modal::after { content: "Add Modifier"; }
+.helpDialogue::after { content: "Help (Click anywhere to close)"; }
+
+.window > *, dialog > * {  
+  background-color: #c2c2c2;
+  border-radius: 5px;
+  border: var(--quirkCol) solid;
+}
+
+dialog > * {
+  padding: 0.5em 1em;
+}
+
+dialog h2 {
+  margin: 0;
+  text-align: center;
+}
+
+.helpDialogue {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#workspace {
+  display: flex;
+  align-items: stretch;
+}
+
+#workspace h2, #mods h3 {
+  margin: 0;
+}
+
+#modifiers {
+  border-right: var(--quirkCol) solid;
+  box-sizing: border-box;
+  overflow: auto;
+  flex-grow: 1;
+}
+
+#editspace {
+  width: min-content;
+  padding: 0.5em;
+}
+
+#editspace h3, #editspace h2 { 
+  margin: 0.5em 0;
+  color: black;
+}
+
+#adders button {
+  display: block;
+  background: #222;
+  margin: 0.5em auto;
+  padding: 0.5em 1em;
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  border: none;
+}
+
+#adders button:hover {
+  background-color: #333;
+}
+
+#adders button:active {
+  background-color: #444;
+}
+
+#mods > div {
+  background: #222;
+  text-align: left;
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0 15px;
+}
+
+dialog > * {
+  margin: 0;
+  padding: 0.5em 1em;
+}
+
+dialog.modal {
+  text-align: left;
+}
+
+dialog.modal > div input {
+  margin-left: 1em;
+}
+
+dialog.modal .save, dialog.modal input {
+  float: right;
+}
+
+.finalButtons {
+  margin-top: 1em;
+}
+
+dialog.modal h2 {
+  text-transform: capitalize;
+}
+
+.helpDialogue {
+  max-width: 650px;
+}
+
+.opt {
+  margin: 0.5em 0;
+}
+
+.helpButton {
+  font-family: 'Courier New', Courier, monospace;
+  border: none;
+  background: #222;
+  color: white;
+  font-weight: 600;
+  font-size: large;
+  border-radius: 5px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button:active {
+  opacity: 0.5;
+}
+
+.quirkButtons button {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+  font-size: medium;
+  color: #eee;
+  
+  border: none;
+  border-radius: 0 15px;
+  margin: 0.25em;
+  padding: 0.5em 1em;
+}
+
+.cancel, .save, .saveQuirk {
+  border: none;
+  font-family: 'Courier New', Courier, monospace;
+  color: #eee;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 5px;
+
+  
+  background-color: red;
+}
+
+.save { background-color: green; }
+.saveQuirk { 
+  background-color: var(--quirkCol); 
+  padding: 0.5em 1em;
+  border-radius: 0 10px;
+}
+
+input[type="text"] {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+  border: none;
+  padding: 0.25em;
+}
+
+#editspace input[type="text"] {
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+.modActs button {
+  border: none;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #444;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 0.1em;
+  height: 2em;
+}
+
+.modActs {
+  width: max-content;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+
+.arg { color: red }
+.arg.prefix { color: #0086EB; }
+.arg.suffix { color: #4ac925; }
+.arg.find { color: #b536da; }
+.arg.regex { color: #e00707; }
+.arg.replace { color: #ff6ff2; }
+.arg.regexreplace { color: #f2a400; }
+.arg.randomreplace { color: #f2a400; }
+.arg.condition { color: #1f9400; }
+
+#testspace > div {
+  display: flex;
+  align-items: stretch;
+}
+
+#testinput, #testoutput {
+  width: 650px;
+  height: 450px;
+  overflow: auto;
+  box-sizing: border-box;
+  display: block;
+  margin: auto;
+  resize: none;
+
+  text-align: left;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  padding: 0.5em 1em;
+}
+
+#testoutput {
+  color: var(--quirkCol);
+  background-color: #eeeeee;
+  border: grey dashed 1px;
+}
+
+#footer {
+  margin-top: 1em;
+  font-weight: 600;
+  font-size: large;
+  background-color: #eee;
+  color: black;
+  border-radius: 1000px 1000px 0 0;
+  padding: 1em;
+}

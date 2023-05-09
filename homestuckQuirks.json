@@ -1,0 +1,294 @@
+{
+  "Aradia": {
+    "handle": "AA",
+    "color": "#a10000",
+    "quirk": [
+      {
+        "type": "simple",
+        "find": "o",
+        "replace": "0"
+      },
+      {
+        "type": "simple",
+        "find": "O",
+        "replace": "O"
+      }
+    ]
+  },
+  "Aradia - Ribbit": {
+    "handle": "AA",
+    "color": "#a10000",
+    "quirk": [
+      {
+        "type": "simple",
+        "find": "o",
+        "replace": "0"
+      },
+      {
+        "type": "simple",
+        "find": "O",
+        "replace": "O"
+      },
+      {
+        "type": "random",
+        "regex": " ",
+        "replaces": [" ribbit ", " ", " ", " ", " ", " ", " "]
+      }
+    ]
+  },
+  "Tavros": {
+    "handle": "AT",
+    "color": "#a15000",
+    "quirk": [
+      {
+        "type": "regex",
+        "regex": "([a-z])",
+        "replace": "upper($1)"
+      },
+      {
+        "type": "regex",
+        "regex": "\\b(\\w)",
+        "replace": "lower($1)"
+      },
+      {
+        "type": "simple",
+        "find": "!",
+        "replace": ","
+      },
+      {
+        "type": "simple",
+        "find": "?",
+        "replace": ","
+      },
+      {
+        "type": "simple",
+        "find": ".",
+        "replace": ","
+      }
+    ]
+  },
+  "Sollux": {
+    "handle": "TA",
+    "color": "#a1a100",
+    "quirk": [
+      {
+        "type": "simple",
+        "find": "i",
+        "replace": "ii"
+      },
+      {
+        "type": "simple",
+        "find": "I",
+        "replace": "II"
+      },
+      {
+        "type": "simple",
+        "find": "s",
+        "replace": "2"
+      },
+      {
+        "type": "simple",
+        "find": "S",
+        "replace": "2"
+      },
+      {
+        "type": "regex",
+        "regex": "\\b[tT]oo?\\b",
+        "replace": "2"
+      }
+    ]
+  },
+  "Karkat": {
+    "handle": "CG",
+    "color": "#626262",
+    "quirk": [
+      {
+        "type": "regex",
+        "regex": "([a-z])",
+        "replace": "upper($1)"
+      }
+    ]
+  },
+  "Nepeta": {
+    "handle": "AC",
+    "color": "#416600",
+    "quirk": [
+      {
+        "type": "prefix",
+        "prefix": ":33 < "
+      },
+      {
+        "type": "prefix",
+        "prefix": "X33 < ",
+        "condition": "!"
+      },
+      {
+        "type": "simple",
+        "find": "ee",
+        "replace": "33"
+      }
+    ]
+  },
+  "Kanaya": {
+    "handle": "GA",
+    "color": "#008141",
+    "quirk": [
+      {
+        "type": "regex",
+        "regex": "\\b(\\w)",
+        "replace": "upper($1)"
+      },
+      {
+        "type": "regex",
+        "regex": "[^\\w\\s]",
+        "replace": ""
+      }
+    ]
+  },
+  "Terezi": {
+    "handle": "GC",
+    "color": "#008282",
+    "quirk": [
+      {
+        "type": "regex",
+        "regex": "([a-z])",
+        "replace": "upper($1)"
+      },
+      {
+        "type": "simple",
+        "find": "A",
+        "replace": "4"
+      },
+      {
+        "type": "simple",
+        "find": "I",
+        "replace": "1"
+      },
+      {
+        "type": "simple",
+        "find": "E",
+        "replace": "3"
+      }
+    ]
+  },
+  "Vriska": {
+    "handle": "AG",
+    "color": "#005682",
+    "quirk": [
+      {
+        "type": "simple",
+        "find": "B",
+        "replace": "8"
+      },
+      {
+        "type": "simple",
+        "find": "b",
+        "replace": "8"
+      },
+      {
+        "type": "simple",
+        "find": ":",
+        "replace": "::::"
+      }
+    ]
+  },
+  "Equius": {
+    "handle": "CT",
+    "color": "#000056",
+    "quirk": [
+      {
+        "type": "prefix",
+        "prefix": "D --> "
+      },
+      {
+        "type": "regex",
+        "regex": "[lL][oO][oO]",
+        "replace": "100"
+      },
+      {
+        "type": "regex",
+        "regex": "(\\b[sS][tT][rR][oO][nN][gG]\\w*)",
+        "replace": "upper($1)"
+      },
+      {
+        "type": "simple",
+        "find": "x",
+        "replace": "%"
+      },
+      {
+        "type": "simple",
+        "find": "X",
+        "replace": "%"
+      },
+      {
+        "type": "simple",
+        "find": "oo",
+        "replace": "00"
+      },
+      {
+        "type": "simple",
+        "find": "OO",
+        "replace": "00"
+      }
+    ]
+  },
+  "Gamzee": {
+    "handle": "TC",
+    "color": "#2b0057",
+    "quirk": [
+      {
+        "type": "regex",
+        "regex": "([a-zA-Z])([a-zA-Z]?)",
+        "replace": "upper($1)lower($2)"
+      }
+    ]
+  },
+  "Gamzee - Sober": {
+    "handle": "TC",
+    "color": "#2b0057",
+    "quirk": [
+      {
+        "type": "regex",
+        "regex": "(\\w*?)([^\\w]|$)(\\w*?)([^\\w]|$)",
+        "replace": "upper($1)$2lower($3)$4"
+      }
+    ]
+  },
+  "Eridan": {
+    "handle": "CA",
+    "color": "#6a006a",
+    "quirk": [
+      {
+        "type": "regex",
+        "regex": "([WwVv])",
+        "replace": "$1$1"
+      },
+      {
+        "type": "simple",
+        "find": "ing",
+        "replace": "in"
+      }
+    ]
+  },
+  "Feferi": {
+    "handle": "CC",
+    "color": "#77003c",
+    "quirk": [
+      {
+        "type": "simple",
+        "find": "H",
+        "replace": ")("
+      },
+      {
+        "type": "simple",
+        "find": "h",
+        "replace": ")("
+      },
+      {
+        "type": "simple",
+        "find": "E",
+        "replace": "-E"
+      }
+    ]
+  }
+}
