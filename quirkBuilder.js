@@ -65,8 +65,8 @@ const processTest = () => {
   let text = document.getElementById("testinput").value
   const handle = document.getElementById("textHandle").value
 
-  if (text) text = processQuirk(text, currentQuirk)
-  if (text && handle) text = handle + ": " + text.replace(/\n/g, "\n" + handle + ": ")
+  text = text ? text.split("\n").map(t => processQuirk(t, currentQuirk)).join(handle ? "\n" + handle + ": " : "\n") : ""
+  text = handle && text ? handle + ": " + text : text
 
   document.getElementById("testoutput").innerText = text
 }
