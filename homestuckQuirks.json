@@ -42,13 +42,8 @@
     "quirk": [
       {
         "type": "regex",
-        "regex": "([a-z])",
-        "replace": "upper($1)"
-      },
-      {
-        "type": "regex",
-        "regex": "\\b(\\w)",
-        "replace": "lower($1)"
+        "regex": "([a-z]*)([A-Z]*)",
+        "replace": "upper($1)lower($2)"
       },
       {
         "type": "simple",
