@@ -51,6 +51,8 @@ let savedQuirks = {
   }
 }
 
+let presetQuirks = {}
+
 if (localStorage.getItem("savedQuirks")) savedQuirks = JSON.parse(localStorage.getItem("savedQuirks"))
 else localStorage.setItem("savedQuirks", JSON.stringify(savedQuirks))
 
@@ -58,20 +60,69 @@ let currentQuirk = initQuirk
 
 // TEST QUIRK
 const updateColor = () => {
-  document.body.style.setProperty("--quirkCol", document.getElementById("textColor").value)
+  if (document.getElementById("testselect").value == "single") {
+    document.body.style.setProperty("--quirkCol", document.getElementById("textColor").value)
+  } else {
+    document.body.style.setProperty("--quirkCol", "black")
+  }
 }
 
 const processTest = () => {
-  let text = document.getElementById("testinput").value
+  updateColor()
+
   const handle = document.getElementById("textHandle").value
+  const workingType = document.getElementById("testselect").value
+  
+  let initText = document.getElementById("testinput").value
+  let lines = initText.split("\n")
+  let finalText = ""
 
-  text = text ? text.split("\n").map(t => processQuirk(t, currentQuirk)).join(handle ? "\n" + handle + ": " : "\n") : ""
-  text = handle && text ? handle + ": " + text : text
+  if (workingType == "single") {
+    lines.forEach((line, i) => {
+      finalText += (handle ? handle + ": " : "") + processQuirk(line, currentQuirk, i + 1) + "\n"
+    })
 
-  document.getElementById("testoutput").innerText = text
+  } else {
+
+    const regHandle = /^[^\s]*?:/
+    let useableQuirks = savedQuirks
+
+    if (workingType == "all") {
+      useableQuirks = {... savedQuirks, ...presetQuirks}
+    }
+
+    // Start tracking counts
+    let useQuirkCounts = {}
+    for (const [key, value] of Object.entries(useableQuirks)) {
+      useQuirkCounts.key = 0
+    }
+
+    // Replace text
+    lines.forEach((line, i) => {
+      // Check if the line has a handle
+      if (regHandle.test(line)) {
+        const [lineHandle, lineContent] = line.split(":", 2).map(e => e.trim())
+        let foundQuirk = false;
+        // For each quirk
+        for (const [key, value] of Object.entries(useableQuirks)) {
+          if (lineHandle == value.handle && !foundQuirk) {
+            useQuirkCounts.key += 1
+            foundQuirk = true
+            finalText += lineHandle + ": " + processQuirk(lineContent, value.quirk, useQuirkCounts.key) + "\n"
+          }
+        }
+        if (!foundQuirk) finalText += line + "\n"
+      } else {
+        finalText += line + "\n"
+      }
+    })
+
+  }
+
+  document.getElementById("testoutput").innerText = finalText
 }
 
-const processQuirk = (text, quirk) => {
+const processQuirk = (text, quirk, line) => {
   let prefix = ""
   let suffix = ""
 
@@ -82,6 +133,15 @@ const processQuirk = (text, quirk) => {
     if (mod.condition) {
       const reg = new RegExp(mod.condition, "g")
       if (!reg.test(text)) type = "invalid"
+    }
+
+    if (mod.nthline) {
+      if (/\d+ *(\+ *\d)*/g.test(mod.nthline)) {
+        [n, offset] = mod.nthline.split("+").map(e => parseInt(e.trim()))
+        if (line%n - (offset ? offset : 0) != 0) {
+          type = "invalid"
+        }
+      }
     }
     
     switch (type) {
@@ -198,6 +258,10 @@ let loadModifiers = quirk => {
 
     if (mod.condition) {
       info.innerHTML += `<div>Condition: /<span class="arg condition">${mod.condition}</span>/g</div>`
+    }
+
+    if (mod.nthline) {
+      info.innerHTML += `<div>nth Line: <span class="arg nthline">n${mod.nthline}</span></div>`
     }
 
     // Acts
@@ -319,6 +383,8 @@ const openModal = (type, modIndex) => {
   } else {
 
     let mod = currentQuirk[modIndex]
+
+    inputs.forEach(e => { e.value = "" })
     
     if (mod.prefix) inputs[0].value = mod.prefix
     if (mod.suffix) inputs[0].value = mod.suffix
@@ -327,10 +393,13 @@ const openModal = (type, modIndex) => {
     if (mod.replace) inputs[1].value = mod.replace
     if (mod.replaces) inputs[1].value = mod.replaces.join()
     if (mod.condition) inputs[2].value = mod.condition
+    if (mod.nthline) inputs[3].value = mod.nthline
 
     modal.dataset.modIndex = modIndex
 
   }
+
+  console.log(currentQuirk)
 
 }
 
@@ -341,6 +410,7 @@ document.querySelectorAll("#adders button").forEach(e => {
     openModal(e.dataset.type)
   }
 })
+
 document.querySelector("button.save").onclick = () => {
 
   // Generate quirk mod
@@ -352,6 +422,7 @@ document.querySelector("button.save").onclick = () => {
   const op1 = document.querySelector("dialog.modal #op1").value
   const op2 = document.querySelector("dialog.modal #op2").value
   const condition = document.querySelector("dialog.modal #opC").value
+  const nthline = document.querySelector("dialog.modal #opL")
 
   switch (type) {
     case "prefix":
@@ -377,6 +448,13 @@ document.querySelector("button.save").onclick = () => {
   }
 
   if (condition) mod.condition = condition
+  if (nthline.value) {
+    if (nthline.validity.patternMismatch) {
+      mod.nthline = "Invalid"
+    } else {
+      mod.nthline = nthline.value
+    }
+  }
 
   // Add mod to current qurik
   const modIndex = document.querySelector("dialog.modal").dataset.modIndex
@@ -449,7 +527,10 @@ const importQuirks = () => {
   loadSavedQuirks("loadedquirks", savedQuirks)
 }
 
-fetch("homestuckQuirks.json").then(response => response.json()).then(json => loadSavedQuirks("presets", json));
+fetch("homestuckQuirks.json").then(response => response.json()).then(json => {
+  presetQuirks = json
+  loadSavedQuirks("presets", json)
+});
 loadSavedQuirks("loadedquirks", savedQuirks)
 processTest()
 updateColor()

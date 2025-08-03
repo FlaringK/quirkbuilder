@@ -112,6 +112,7 @@ dialog h2 {
 .helpDialogue {
   font-size: 16px;
   font-weight: 400;
+  position: fixed;
 }
 
 #workspace {
@@ -290,6 +291,20 @@ input[type="text"] {
 .arg.regexreplace { color: #f2a400; }
 .arg.randomreplace { color: #f2a400; }
 .arg.condition { color: #1f9400; }
+.arg.nthline { color: #00d5f2; }
+
+#testtitle {
+  margin: 1em auto 0.25em;
+  font-size: 3em;
+}
+
+#testselect {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 16px;  
+  border-radius: 0 15px;
+  padding: 0.5em 1em;
+}
 
 #testspace > div {
   display: flex;

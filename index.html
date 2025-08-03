@@ -75,7 +75,27 @@
       </div>
     </div>
 
-    <h2>Testing Area</h2>
+    <h2 id="testtitle">Working Area</h2>
+    <div id="testoptions">
+      <select name="testtype" id="testselect" onchange="processTest()">
+        <option value="single" selected>Test Current Built Quirk</option>
+        <option value="custom">Write with Saved Quriks</option>
+        <option value="all">Write with Saved and Presets Quriks</option>
+      </select>
+      <button class="helpButton">?</button>
+      <dialog class="helpDialogue">
+        <div>
+          <p>These are the 3 ways you can configure the working area:</p>
+          <h2>Test Current Built Quirk</h2>
+          <p>This will apply the quirk currently in the quirk builder to the text on the left. If your quirk has a handle it will also prefix each line with that handle.</p>
+          <h2>Write with Saved Quriks</h2>
+          <p>This will Conditionally apply any saved quirks to each line of the text on the left if that line starts with the quirk's saved chumhandle (followed by a colon). For example, a line starting with "AA:" will have a quirk with the saved handle "AA" applied to it. This will not include the current buit quirk in the builder.</p>
+          <p>Note that colouring won't be applied, you can use my other tool <a href="https://flaringk.github.io/homestuck5plus/">homestuck5plus</a> to format your text for diffrent mediums.</p>
+          <h2>Write with Saved and Presets Quriks</h2>
+          <p>This is the same as the above option but now includes the homestuck preset quirks.</p>
+        </div>
+      </dialog>
+    </div>
     <div id="testspace" class="window">
       <div>
         <textarea name="testinput" id="testinput" onkeyup="processTest()" placeholder="Type here"></textarea>
@@ -105,18 +125,21 @@
     <div>
       <h2>Simple Replace</h2>
       <hr>
+
       <div class="option1 opt">
         <label for="op1">Find Text: </label>
         <button class="helpButton">?</button>
         <dialog class="helpDialogue">This is a test</dialog>
         <input type="text" name="op1" id="op1">
       </div>
+
       <div class="option2 opt">
         <label for="op2">Replace Text: </label>
         <button class="helpButton">?</button>
         <dialog class="helpDialogue">This is a test</dialog>
         <input type="text" name="op2" id="op2">
       </div>
+
       <div class="optCon opt">
         <label for="opC">Condition Regex: </label>
         <button class="helpButton">?</button>
@@ -128,9 +151,25 @@
         </dialog>
         <input type="text" name="opC" id="opC">
       </div>
+
+      <div class="optLine opt">
+        <label for="opL">Nth Line: </label>
+        <button class="helpButton">?</button>
+        <dialog class="helpDialogue">
+          <div>
+            <p>This is the mutiple of lines that this quirk mod will be applied to. For example if this is set to "3", this quirk mod will appear every third line.</p>
+            <p>An offset can be applied by using a plus (+) symbol after the mutiple. For example "3+1" will apply this quirk every third line offset forward by one.</p>
+            <p>The values "odd" and "even" can also be used as a more readable value.</p>
+            <p>This feature is not present in the pesterchum client.</p>
+          </div>
+        </dialog>
+        <input type="text" name="opL" id="opL" placeholder="1" pattern="\d+ *(\+ *\d)*">
+      </div>
+
       <div class="finalButtons">
         <button class="cancel">Cancel</button><button class="save">Save</button>
       </div>
+
     </div>
   </dialog>
   
