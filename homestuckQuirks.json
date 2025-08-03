@@ -235,6 +235,12 @@
         "type": "regex",
         "regex": "([a-zA-Z])([a-zA-Z]?)",
         "replace": "upper($1)lower($2)"
+      },
+      {
+        "type": "regex",
+        "regex": "([a-zA-Z])([a-zA-Z]?)",
+        "replace": "lower($1)upper($2)",
+        "prevcondition": "[A-Z][^A-Za-z]*$"
       }
     ]
   },
@@ -246,6 +252,12 @@
         "type": "regex",
         "regex": "(\\w*?)([^\\w]|$)(\\w*?)([^\\w]|$)",
         "replace": "upper($1)$2lower($3)$4"
+      },
+      {
+        "type": "regex",
+        "regex": "(\\w*?)([^\\w]|$)(\\w*?)([^\\w]|$)",
+        "replace": "lower($1)$2upper($3)$4",
+        "prevcondition": "[A-Z][^A-Za-z]*$"
       }
     ]
   },

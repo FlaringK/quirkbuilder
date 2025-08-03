@@ -140,24 +140,38 @@
         <input type="text" name="op2" id="op2">
       </div>
 
+      <hr>
+
       <div class="optCon opt">
-        <label for="opC">Condition Regex: </label>
+        <label for="opC">Current Line Conditional Regex: </label>
         <button class="helpButton">?</button>
         <dialog class="helpDialogue">
           <div>
-            <p>This is the condition for this quirk mod. If this condition is met, aka the regex is found within the text, the quirk mod will be applied, otherwise it will not be. For example, if the condition regex is set to /<span class="arg condition">!</span>/g, the quirk will only be applied when a "!" is found within the text.</p>
+            <p>This is the OPTIONAL condition for this quirk mod. If this condition is met IN THE CURRENT LINE OF TEXT, aka the regex is found within the text, the quirk mod will be applied, otherwise it will not be. For example, if the condition regex is set to /<span class="arg condition">!</span>/g, the quirk will only be applied when a "!" is found within the text.</p>
             <p>This feature is not present in the pesterchum client. Though it's effects can be emulated using regex replaces if you know what you're doing.</p>
           </div>
         </dialog>
         <input type="text" name="opC" id="opC">
       </div>
 
-      <div class="optLine opt">
-        <label for="opL">Nth Line: </label>
+      <div class="optCon opt">
+        <label for="opC">Previous Line Conditional Regex: </label>
         <button class="helpButton">?</button>
         <dialog class="helpDialogue">
           <div>
-            <p>This is the mutiple of lines that this quirk mod will be applied to. For example if this is set to "3", this quirk mod will appear every third line.</p>
+            <p>This is the OPTIONAL condition for this quirk mod. If this condition is met IN THE PREVIOUS LINE OF TEXT, aka the regex is found within the previous line of text, the quirk mod will be applied, otherwise it will not be. For example, if the condition regex is set to /<span class="arg condition">!</span>/g, the quirk will only be applied when a "!" is found within the previous line of text.</p>
+            <p>This feature is not present in the pesterchum client. Though it's effects can be emulated using regex replaces if you know what you're doing.</p>
+          </div>
+        </dialog>
+        <input type="text" name="opPC" id="opPC">
+      </div>
+
+      <div class="optLine opt">
+        <label for="opL">Nth Line Condition: </label>
+        <button class="helpButton">?</button>
+        <dialog class="helpDialogue">
+          <div>
+            <p>This is the OPTIONAL mutiple of lines that this quirk mod will be applied to. For example if this is set to "3", this quirk mod will appear every third line.</p>
             <p>An offset can be applied by using a plus (+) symbol after the mutiple. For example "3+1" will apply this quirk every third line offset forward by one.</p>
             <p>The values "odd" and "even" can also be used as a more readable value.</p>
             <p>This feature is not present in the pesterchum client.</p>

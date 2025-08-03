@@ -78,8 +78,12 @@ const processTest = () => {
   let finalText = ""
 
   if (workingType == "single") {
+    let previousText = ""
+
     lines.forEach((line, i) => {
-      finalText += (handle ? handle + ": " : "") + processQuirk(line, currentQuirk, i + 1) + "\n"
+      let newText = (handle ? handle + ": " : "") + processQuirk(line, currentQuirk, previousText, i + 1) + "\n"
+      finalText += newText 
+      previousText = newText
     })
 
   } else {
@@ -94,7 +98,7 @@ const processTest = () => {
     // Start tracking counts
     let useQuirkCounts = {}
     for (const [key, value] of Object.entries(useableQuirks)) {
-      useQuirkCounts.key = 0
+      useQuirkCounts.key = { count: 0, previousText: "" }
     }
 
     // Replace text
@@ -106,9 +110,11 @@ const processTest = () => {
         // For each quirk
         for (const [key, value] of Object.entries(useableQuirks)) {
           if (lineHandle == value.handle && !foundQuirk) {
-            useQuirkCounts.key += 1
+            useQuirkCounts.key.count += 1
             foundQuirk = true
-            finalText += lineHandle + ": " + processQuirk(lineContent, value.quirk, useQuirkCounts.key) + "\n"
+            let newText = lineHandle + ": " + processQuirk(lineContent, value.quirk, useQuirkCounts.key.previousText, useQuirkCounts.key.count) + "\n"
+            finalText += newText
+            useQuirkCounts.key.previousText = newText
           }
         }
         if (!foundQuirk) finalText += line + "\n"
@@ -122,7 +128,7 @@ const processTest = () => {
   document.getElementById("testoutput").innerText = finalText
 }
 
-const processQuirk = (text, quirk, line) => {
+const processQuirk = (text, quirk, previousText, lineIndex) => {
   let prefix = ""
   let suffix = ""
 
@@ -131,14 +137,22 @@ const processQuirk = (text, quirk, line) => {
     let type = mod.type
 
     if (mod.condition) {
-      const reg = new RegExp(mod.condition, "g")
+      const reg = new RegExp(mod.condition.replace("\\\\", "\\"), "g")
       if (!reg.test(text)) type = "invalid"
     }
+    
 
+    if (mod.prevcondition) {
+      const reg = new RegExp(mod.prevcondition.replace("\\\\", "\\"), "g")
+      if (!reg.test(previousText) == true) {
+        type = "invalid"
+      }
+    }
+ 
     if (mod.nthline) {
       if (/\d+ *(\+ *\d)*/g.test(mod.nthline)) {
         [n, offset] = mod.nthline.split("+").map(e => parseInt(e.trim()))
-        if (line%n - (offset ? offset : 0) != 0) {
+        if (lineIndex % n - (offset ? offset : 0) != 0) {
           type = "invalid"
         }
       }
@@ -257,7 +271,11 @@ let loadModifiers = quirk => {
     }
 
     if (mod.condition) {
-      info.innerHTML += `<div>Condition: /<span class="arg condition">${mod.condition}</span>/g</div>`
+      info.innerHTML += `<div>Current line Condition: /<span class="arg condition">${mod.condition}</span>/g</div>`
+    }
+
+    if (mod.prevcondition) {
+      info.innerHTML += `<div>Previous line Condition: /<span class="arg condition">${mod.prevcondition}</span>/g</div>`
     }
 
     if (mod.nthline) {
@@ -392,8 +410,10 @@ const openModal = (type, modIndex) => {
     if (mod.regex) inputs[0].value = mod.regex
     if (mod.replace) inputs[1].value = mod.replace
     if (mod.replaces) inputs[1].value = mod.replaces.join()
+
     if (mod.condition) inputs[2].value = mod.condition
-    if (mod.nthline) inputs[3].value = mod.nthline
+    if (mod.prevcondition) inputs[3].value = mod.prevcondition
+    if (mod.nthline) inputs[4].value = mod.nthline
 
     modal.dataset.modIndex = modIndex
 
@@ -422,6 +442,7 @@ document.querySelector("button.save").onclick = () => {
   const op1 = document.querySelector("dialog.modal #op1").value
   const op2 = document.querySelector("dialog.modal #op2").value
   const condition = document.querySelector("dialog.modal #opC").value
+  const prevcondition = document.querySelector("dialog.modal #opPC").value
   const nthline = document.querySelector("dialog.modal #opL")
 
   switch (type) {
@@ -448,6 +469,7 @@ document.querySelector("button.save").onclick = () => {
   }
 
   if (condition) mod.condition = condition
+  if (prevcondition) mod.prevcondition = prevcondition
   if (nthline.value) {
     if (nthline.validity.patternMismatch) {
       mod.nthline = "Invalid"
